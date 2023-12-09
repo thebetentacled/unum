@@ -3,18 +3,18 @@ Unum: a cli clone of Uno (Classic ver., 108 cards)
 {license info}
 """
 
+# Generic Imports
+import random
+
 # Global Variables
-# Player names
+  # Player names
 p1_name = ""
 p2_name = ""
-p3_name = ""
-p4_name = ""
-# Player hands
+
+  # Player hands
 p1_hand = []
 p2_hand = []
-p3_hand = []
-p4_hand = []
-# Deck info
+  # Deck info
 cards_in_deck = 108
 card_colors = ["red", "yellow", "blue", "green"]
 wild_cards_in_deck = 8
@@ -45,7 +45,7 @@ class card():
 
 
 # Cards
-# Reds
+  # Reds
 red_zero = card(0, "Red", False, False, False, False, False, False)
 red_one_one = card(1, "Red", False, False, False, False, False, False)
 red_one_two = card(1, "Red", False, False, False, False, False, False)
@@ -65,7 +65,9 @@ red_eight_one = card(8, "Red", False, False, False, False, False, False)
 red_eight_two = card(8, "Red", False, False, False, False, False, False)
 red_nine_one = card(9, "Red", False, False, False, False, False, False)
 red_nine_two = card(9, "Red", False, False, False, False, False, False)
-# Yellows
+red_skip_one = card(False, "Red", True, False, False, False, False, False)
+red_skip_two = card(False, "Red", True, False, False, False, False, False)
+  # Yellows
 yellow_zero = card(0, "Yellow", False, False, False, False, False, False)
 yellow_one_one = card(1, "Yellow", False, False, False, False, False, False)
 yellow_one_two = card(1, "Yellow", False, False, False, False, False, False)
@@ -85,7 +87,9 @@ yellow_eight_one = card(8, "Yellow", False, False, False, False, False, False)
 yellow_eight_two = card(8, "Yellow", False, False, False, False, False, False)
 yellow_nine_one = card(9, "Yellow", False, False, False, False, False, False)
 yellow_nine_two = card(9, "Yellow", False, False, False, False, False, False)
-# Blues
+yellow_skip_one = card(False, "Yellow", True, False, False, False, False, False)
+yellow_skip_two = card(False, "Yellow", True, False, False, False, False, False)
+  # Blues
 blue_zero = card(0, "Blue", False, False, False, False, False, False)
 blue_one_one = card(1, "Blue", False, False, False, False, False, False)
 blue_one_two = card(1, "Blue", False, False, False, False, False, False)
@@ -105,7 +109,9 @@ blue_eight_one = card(8, "Blue", False, False, False, False, False, False)
 blue_eight_two = card(8, "Blue", False, False, False, False, False, False)
 blue_nine_one = card(9, "Blue", False, False, False, False, False, False)
 blue_nine_two = card(9, "Blue", False, False, False, False, False, False)
-# Greens
+blue_skip_one = card(False, "Blue", True, False, False, False, False, False)
+blue_skip_two = card(False, "Blue", True, False, False, False, False, False)
+  # Greens
 green_zero = card(0, "Green", False, False, False, False, False, False)
 green_one_one = card(1, "Green", False, False, False, False, False, False)
 green_one_two = card(1, "Green", False, False, False, False, False, False)
@@ -125,12 +131,12 @@ green_eight_one = card(8, "Green", False, False, False, False, False, False)
 green_eight_two = card(8, "Green", False, False, False, False, False, False)
 green_nine_one = card(9, "Green", False, False, False, False, False, False)
 green_nine_two = card(9, "Green", False, False, False, False, False, False)
-# Wilds
+green_skip_one = card(False, "Green", True, False, False, False, False, False)
+green_skip_two = card(False, "Green", True, False, False, False, False, False)
+  # Wild
 wild_draw_4 = card(False, "Draw 4", False, False, True, False, False, False)
 wild = card(False, "Wild Card", False, False, False, False, True, False)
-shuffle_hands_card = card(False, "Shuffle Hands", False, False, False, False,
-                          False, True)
-
+shuffle_hands_card = card(False, "Shuffle Hands", False, False, False, False,False, True)
 
 # Functions
 def print_logo():
@@ -140,8 +146,22 @@ def print_logo():
   print("UUUUU  N   N  UUUUU  M    M")
 
 
-def draw_card():
-  pass  # add code here that will draw a random card with accurate probabilities to Uno
+def draw_card_p1():
+  global p1_hand
+  color_draw = random.randint(1, 5)              #
+  if color_draw == 1:
+    red_card_draw = random.randint(0, 9)          #
+  elif color_draw == 2:
+    blue_card_draw = random.randint(0, 9)        #
+    yellow_card_draw = random.randint(0, 9)
+  elif color_draw == 3:                        #   FINISH THIS FUNCTION, THEN C&P INTO draw_card_p2()!!!!
+    blue_card_draw = random.randint(0, 9)
+  elif color_draw == 4:                        #
+    green_card_draw = random.randint(0, 9)
+  elif color_draw == 5:                        #
+    wild_card_draw = random.randint(1, 3)
+    if wild_card_draw == 1:
+      p1_hand.append(wild_draw_4)              #
 
 
 def drop_card():
@@ -153,8 +173,14 @@ def shuffle_hands():
 
 
 def new_game():
-  pass  # add code that will reset the game
-
+  global p1_name
+  global p2_name
+  global p1_hand
+  global p2_hand
+  p1_name = input("What is player 1's name?")
+  p2_name = input("What is player 2's name?")
+  p1_hand = []
+  p2_hand = []
 
 def remake_deck():
   pass  # add code that will remake the deck if the deck is empty

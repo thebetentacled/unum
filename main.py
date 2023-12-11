@@ -67,6 +67,10 @@ red_nine_one = card(9, "Red", False, False, False, False, False, False)
 red_nine_two = card(9, "Red", False, False, False, False, False, False)
 red_skip_one = card(False, "Red", True, False, False, False, False, False)
 red_skip_two = card(False, "Red", True, False, False, False, False, False)
+red_reverse_one = card(False, "Red", False, True, False, False, False, False)
+red_reverse_two = card(False, "Red", False, True, False, False, False, False)
+red_draw_2_one = card(False, "Red", False, False, True, False, False, False)
+red_draw_2_two = card(False, "Red", False, False, True, False, False, False)
   # Yellows
 yellow_zero = card(0, "Yellow", False, False, False, False, False, False)
 yellow_one_one = card(1, "Yellow", False, False, False, False, False, False)
@@ -89,6 +93,10 @@ yellow_nine_one = card(9, "Yellow", False, False, False, False, False, False)
 yellow_nine_two = card(9, "Yellow", False, False, False, False, False, False)
 yellow_skip_one = card(False, "Yellow", True, False, False, False, False, False)
 yellow_skip_two = card(False, "Yellow", True, False, False, False, False, False)
+yellow_reverse_one = card(False, "Yellow", False, True, False, False, False, False)
+yellow_reverse_two = card(False, "Yellow", False, True, False, False, False, False)
+yellow_draw_2_one = card(False, "Yellow", False, False, True, False, False, False)
+yellow_draw_2_two = card(False, "Yellow", False, False, True, False, False, False)
   # Blues
 blue_zero = card(0, "Blue", False, False, False, False, False, False)
 blue_one_one = card(1, "Blue", False, False, False, False, False, False)
@@ -111,6 +119,10 @@ blue_nine_one = card(9, "Blue", False, False, False, False, False, False)
 blue_nine_two = card(9, "Blue", False, False, False, False, False, False)
 blue_skip_one = card(False, "Blue", True, False, False, False, False, False)
 blue_skip_two = card(False, "Blue", True, False, False, False, False, False)
+blue_reverse_one = card(False, "Blue", False, True, False, False, False, False)
+blue_reverse_two = card(False, "Blue", False, True, False, False, False, False)
+blue_draw_2_one = card(False, "Blue", False, False, True, False, False, False)
+blue_draw_2_two = card(False, "Blue", False, False, True, False, False, False)
   # Greens
 green_zero = card(0, "Green", False, False, False, False, False, False)
 green_one_one = card(1, "Green", False, False, False, False, False, False)
@@ -133,6 +145,10 @@ green_nine_one = card(9, "Green", False, False, False, False, False, False)
 green_nine_two = card(9, "Green", False, False, False, False, False, False)
 green_skip_one = card(False, "Green", True, False, False, False, False, False)
 green_skip_two = card(False, "Green", True, False, False, False, False, False)
+green_reverse_one = card(False, "Green", False, True, False, False, False, False)
+green_reverse_two = card(False, "Green", False, True, False, False, False, False)
+green_draw_2_one = card(False, "Green", False, False, True, False, False, False)
+green_draw_2_two = card(False, "Green", False, False, True, False, False, False)
   # Wild
 wild_draw_4 = card(False, "Draw 4", False, False, True, False, False, False)
 wild = card(False, "Wild Card", False, False, False, False, True, False)
@@ -145,19 +161,276 @@ def print_logo():
   print("U   U  N  NN  U   U  M MM M")
   print("UUUUU  N   N  UUUUU  M    M")
 
-
+# Function that defines card draw chance
 def draw_card_p1():
   global p1_hand
-  color_draw = random.randint(1, 5)              #
+  color_draw = random.randint(1, 5)              
   if color_draw == 1:
-    red_card_draw = random.randint(0, 9)          #
-  elif color_draw == 2:
-    blue_card_draw = random.randint(0, 9)        #
-    yellow_card_draw = random.randint(0, 9)
-  elif color_draw == 3:                        #   FINISH THIS FUNCTION, THEN C&P INTO draw_card_p2()!!!!
-    blue_card_draw = random.randint(0, 9)
+    red_card_draw = random.randint(0, 12)    
+    if red_card_draw == 0:
+      p1_hand.append(red_zero)
+    
+    if red_card_draw == 1:
+      which_red_one = random.randint(1, 2)
+      if which_red_one == 1:
+        p1_hand.append(red_one_one)
+      elif which_red_one == 2:
+        p1_hand.append(red_one_two)
+        
+    elif red_card_draw == 2:
+      which_red_two = random.randint(1, 2)
+      if which_red_two == 1:
+        p1_hand.append(red_two_one)
+      elif which_red_two == 2:
+        p1_hand.append(red_two_two)
+
+    elif red_card_draw == 3:
+      which_red_three = random.randint(1, 2)
+      if which_red_three == 1:
+        p1_hand.append(red_three_one)
+      elif which_red_three == 2:
+        p1_hand.append(red_three_two)
+      
+    elif red_card_draw == 4:
+      which_red_four = random.randint(1, 2)
+      if which_red_four == 1:
+        p1_hand.append(red_four_one)
+      elif which_red_four == 2:
+        p1_hand.append(red_four_two)
+        
+    elif red_card_draw == 5:
+      which_red_five = random.randint(1, 2)
+      if which_red_five == 1:
+        p1_hand.append(red_five_one)
+      elif which_red_five == 2:
+        p1_hand.append(red_five_two)
+      
+    elif red_card_draw == 6:
+      which_red_six = random.randint(1, 2)
+      if which_red_six == 1:
+        p1_hand.append(red_six_one)
+      elif which_red_six == 2:
+        p1_hand.append(red_six_two)
+        
+    elif red_card_draw == 7:
+      which_red_seven = random.randint(1, 2)
+      if which_red_seven == 1:
+        p1_hand.append(red_seven_one)
+      elif which_red_seven == 2:
+        p1_hand.append(red_seven_two)
+        
+    elif red_card_draw == 8:
+      which_red_eight = random.randint(1, 2)
+      if which_red_eight == 1:
+        p1_hand.append(red_eight_one)
+      elif which_red_eight == 2:
+        p1_hand.append(red_eight_two)
+        
+    elif red_card_draw == 9:
+      which_red_nine = random.randint(1, 2)
+      if which_red_nine == 1:
+        p1_hand.append(red_nine_one)
+      elif which_red_nine == 2:
+        p1_hand.append(red_nine_two)
+    
+    elif red_card_draw == 10:
+      which_red_skip = random.randint(1, 2)
+      if which_red_skip == 1:
+        p1_hand.append(red_skip_one)
+      elif which_red_skip == 2:
+        p1_hand.append(red_skip_two)
+    elif red_card_draw == 11:
+      which_red_reverse = random.randint(1, 2)
+      if which_red_reverse == 1:
+        p1_hand.append(red_reverse_one)
+      elif which_red_reverse == 2:
+        p1_hand.append(red_reverse_two)
+        
+    elif red_card_draw == 12:
+      which_red_draw_2 = random.randint(1, 2)
+      if which_red_draw_2 == 1:
+        p1_hand.append(red_draw_2_one)
+      elif which_red_draw_2:
+        p1_hand.append(red_draw_2_two)
+      
+  elif color_draw == 2:        
+    yellow_card_draw = random.randint(0, 12)    
+    if yellow_card_draw == 0:
+      p1_hand.append(yellow_zero)
+
+    if yellow_card_draw == 1:
+      which_yellow_one = random.randint(1, 2)
+      if which_yellow_one == 1:
+        p1_hand.append(yellow_one_one)
+      elif which_yellow_one == 2:
+        p1_hand.append(yellow_one_two)
+
+    elif yellow_card_draw == 2:
+      which_yellow_two = random.randint(1, 2)
+      if which_yellow_two == 1:
+        p1_hand.append(yellow_two_one)
+      elif which_yellow_two == 2:
+        p1_hand.append(yellow_two_two)
+
+    elif yellow_card_draw == 3:
+      which_yellow_three = random.randint(1, 2)
+      if which_yellow_three == 1:
+        p1_hand.append(yellow_three_one)
+      elif which_yellow_three == 2:
+        p1_hand.append(yellow_three_two)
+
+    elif yellow_card_draw == 4:
+      which_yellow_four = random.randint(1, 2)
+      if which_yellow_four == 1:
+        p1_hand.append(yellow_four_one)
+      elif which_yellow_four == 2:
+        p1_hand.append(yellow_four_two)
+
+    elif yellow_card_draw == 5:
+      which_yellow_five = random.randint(1, 2)
+      if which_yellow_five == 1:
+        p1_hand.append(yellow_five_one)
+      elif which_yellow_five == 2:
+        p1_hand.append(yellow_five_two)
+
+    elif yellow_card_draw == 6:
+      which_yellow_six = random.randint(1, 2)
+      if which_yellow_six == 1:
+        p1_hand.append(yellow_six_one)
+      elif which_yellow_six == 2:
+        p1_hand.append(yellow_six_two)
+
+    elif yellow_card_draw == 7:
+      which_yellow_seven = random.randint(1, 2)
+      if which_yellow_seven == 1:
+        p1_hand.append(yellow_seven_one)
+      elif which_yellow_seven == 2:
+        p1_hand.append(yellow_seven_two)
+
+    elif yellow_card_draw == 8:
+      which_red_eight = random.randint(1, 2)
+      if which_red_eight == 1:
+        p1_hand.append(yellow_eight_one)
+      elif which_red_eight == 2:
+        p1_hand.append(yellow_eight_two)
+
+    elif yellow_card_draw == 9:
+      which_yellow_nine = random.randint(1, 2)
+      if which_yellow_nine == 1:
+        p1_hand.append(yellow_nine_one)
+      elif which_yellow_nine == 2:
+        p1_hand.append(yellow_nine_two)
+
+    elif yellow_card_draw == 10:
+      which_yellow_skip = random.randint(1, 2)
+      if which_yellow_skip == 1:
+        p1_hand.append(yellow_skip_one)
+      elif which_yellow_skip == 2:
+        p1_hand.append(yellow_skip_two)
+        
+    elif yellow_card_draw == 11:
+      which_yellow_reverse = random.randint(1, 2)
+      if which_yellow_reverse == 1:
+        p1_hand.append(yellow_reverse_one)
+      elif which_yellow_reverse == 2:
+        p1_hand.append(yellow_reverse_two)
+
+    elif yellow_card_draw == 12:
+      which_yellow_draw_2 = random.randint(1, 2)
+      if which_yellow_draw_2 == 1:
+        p1_hand.append(yellow_draw_2_one)
+      elif which_yellow_draw_2:
+        p1_hand.append(yellow_draw_2_two)
+        
+  elif color_draw == 3:                        #   
+    blue_card_draw = random.randint(0, 12)   
+    if blue_card_draw == 0:
+      p1_hand.append(blue_zero)
+
+    if blue_card_draw == 1:
+      which_blue_one = random.randint(1, 2)
+      if which_blue_one == 1:
+        p1_hand.append(blue_one_one)
+      elif which_blue_one == 2:
+        p1_hand.append(blue_one_two)
+
+    elif blue_card_draw == 2:
+      which_blue_two = random.randint(1, 2)
+      if which_blue_two == 1:
+        p1_hand.append(blue_two_one)
+      elif which_blue_two == 2:
+        p1_hand.append(blue_two_two)
+
+    elif blue_card_draw == 3:
+      which_blue_three = random.randint(1, 2)
+      if which_blue_three == 1:
+        p1_hand.append(blue_three_one)
+      elif which_blue_three == 2:
+        p1_hand.append(blue_three_two)
+
+    elif blue_card_draw == 4:
+      which_blue_four = random.randint(1, 2)
+      if which_blue_four == 1:
+        p1_hand.append(blue_four_one)
+      elif which_blue_four == 2:
+        p1_hand.append(blue_four_two)
+
+    elif blue_card_draw == 5:
+      which_blue_five = random.randint(1, 2)
+      if which_blue_five == 1:
+        p1_hand.append(blue_five_one)
+      elif which_blue_five == 2:
+        p1_hand.append(blue_five_two)
+
+    elif blu_card_draw == 6:
+      which_red_six = random.randint(1, 2)
+      if which_red_six == 1:
+        p1_hand.append(red_six_one)
+      elif which_red_six == 2:
+        p1_hand.append(red_six_two)
+
+    elif red_card_draw == 7:
+      which_red_seven = random.randint(1, 2)
+      if which_red_seven == 1:
+        p1_hand.append(red_seven_one)
+      elif which_red_seven == 2:
+        p1_hand.append(red_seven_two)
+
+    elif red_card_draw == 8:
+      which_red_eight = random.randint(1, 2)
+      if which_red_eight == 1:
+        p1_hand.append(red_eight_one)
+      elif which_red_eight == 2:
+        p1_hand.append(red_eight_two)
+
+    elif red_card_draw == 9:
+      which_red_nine = random.randint(1, 2)
+      if which_red_nine == 1:
+        p1_hand.append(red_nine_one)
+      elif which_red_nine == 2:
+        p1_hand.append(red_nine_two)
+
+    elif red_card_draw == 10:
+      which_red_skip = random.randint(1, 2)
+      if which_red_skip == 1:
+        p1_hand.append(red_skip_one)
+      elif which_red_skip == 2:
+        p1_hand.append(red_skip_two)
+    elif red_card_draw == 11:
+      which_red_reverse = random.randint(1, 2)
+      if which_red_reverse == 1:
+        p1_hand.append(red_reverse_one)
+      elif which_red_reverse == 2:
+        p1_hand.append(red_reverse_two)
+
+    elif red_card_draw == 12:
+      which_red_draw_2 = random.randint(1, 2)
+      if which_red_draw_2 == 1:
+        p1_hand.append(red_draw_2_one)
+      elif which_red_draw_2:
+        p1_hand.append(red_draw_2_two)
   elif color_draw == 4:                        #
-    green_card_draw = random.randint(0, 9)
+    green_card_draw = random.randint(0, 12)
   elif color_draw == 5:                        #
     wild_card_draw = random.randint(1, 3)
     if wild_card_draw == 1:
@@ -184,6 +457,10 @@ def new_game():
 
 def remake_deck():
   pass  # add code that will remake the deck if the deck is empty
+
+
+# Main Code
+
 
 
 # Main Code

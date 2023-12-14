@@ -1,5 +1,5 @@
 """
-Unum: a cli clone of Uno (Classic ver., 108 cards)
+Unum: a cli clone of Uno
 {license info}
 """
 
@@ -7,460 +7,201 @@ Unum: a cli clone of Uno (Classic ver., 108 cards)
 import random
 
 # Global Variables
-  # Player names
 p1_name = ""
 p2_name = ""
+deck = []
+discard = []
+discard_color = "r"
+prev_card = ""
 
-  # Player hands
+# Player hands
 p1_hand = []
 p2_hand = []
-  # Deck info
-cards_in_deck = 108
-card_colors = ["red", "yellow", "blue", "green"]
-wild_cards_in_deck = 8
-current_discard_color = ""
 
-
-# Classes
-class card():
-  number = ""
-  color = ""
-  skip = False
-  reverse = False
-  draw_2 = False
-  wild_draw_4 = False
-  wild = False
-  shuffle_hands_card = False
-
-  def __init__(self, number, color, skip, reverse, draw_2, wild_draw_4, wild,
-               shuffle_hands_card):
-    self.number = number
-    self.color = color
-    self.skip = skip
-    self.reverse = reverse
-    self.draw_2 = draw_2
-    self.wild_draw_4 = wild_draw_4
-    self.wild = wild
-    self.shuffle_hands_card = shuffle_hands_card
-
-
-# Cards
-  # Reds
-red_zero = card(0, "Red", False, False, False, False, False, False)
-red_one_one = card(1, "Red", False, False, False, False, False, False)
-red_one_two = card(1, "Red", False, False, False, False, False, False)
-red_two_one = card(2, "Red", False, False, False, False, False, False)
-red_two_two = card(2, "Red", False, False, False, False, False, False)
-red_three_one = card(3, "Red", False, False, False, False, False, False)
-red_three_two = card(3, "Red", False, False, False, False, False, False)
-red_four_one = card(4, "Red", False, False, False, False, False, False)
-red_four_two = card(4, "Red", False, False, False, False, False, False)
-red_five_one = card(5, "Red", False, False, False, False, False, False)
-red_five_two = card(5, "Red", False, False, False, False, False, False)
-red_six_one = card(6, "Red", False, False, False, False, False, False)
-red_six_two = card(6, "Red", False, False, False, False, False, False)
-red_seven_one = card(7, "Red", False, False, False, False, False, False)
-red_seven_two = card(7, "Red", False, False, False, False, False, False)
-red_eight_one = card(8, "Red", False, False, False, False, False, False)
-red_eight_two = card(8, "Red", False, False, False, False, False, False)
-red_nine_one = card(9, "Red", False, False, False, False, False, False)
-red_nine_two = card(9, "Red", False, False, False, False, False, False)
-red_skip_one = card(False, "Red", True, False, False, False, False, False)
-red_skip_two = card(False, "Red", True, False, False, False, False, False)
-red_reverse_one = card(False, "Red", False, True, False, False, False, False)
-red_reverse_two = card(False, "Red", False, True, False, False, False, False)
-red_draw_2_one = card(False, "Red", False, False, True, False, False, False)
-red_draw_2_two = card(False, "Red", False, False, True, False, False, False)
-  # Yellows
-yellow_zero = card(0, "Yellow", False, False, False, False, False, False)
-yellow_one_one = card(1, "Yellow", False, False, False, False, False, False)
-yellow_one_two = card(1, "Yellow", False, False, False, False, False, False)
-yellow_two_one = card(2, "Yellow", False, False, False, False, False, False)
-yellow_two_two = card(2, "Yellow", False, False, False, False, False, False)
-yellow_three_one = card(3, "Yellow", False, False, False, False, False, False)
-yellow_three_two = card(3, "Yellow", False, False, False, False, False, False)
-yellow_four_one = card(4, "Yellow", False, False, False, False, False, False)
-yellow_four_two = card(4, "Yellow", False, False, False, False, False, False)
-yellow_five_one = card(5, "Yellow", False, False, False, False, False, False)
-yellow_five_two = card(5, "Yellow", False, False, False, False, False, False)
-yellow_six_one = card(6, "Yellow", False, False, False, False, False, False)
-yellow_six_two = card(6, "Yellow", False, False, False, False, False, False)
-yellow_seven_one = card(7, "Yellow", False, False, False, False, False, False)
-yellow_seven_two = card(7, "Yellow", False, False, False, False, False, False)
-yellow_eight_one = card(8, "Yellow", False, False, False, False, False, False)
-yellow_eight_two = card(8, "Yellow", False, False, False, False, False, False)
-yellow_nine_one = card(9, "Yellow", False, False, False, False, False, False)
-yellow_nine_two = card(9, "Yellow", False, False, False, False, False, False)
-yellow_skip_one = card(False, "Yellow", True, False, False, False, False, False)
-yellow_skip_two = card(False, "Yellow", True, False, False, False, False, False)
-yellow_reverse_one = card(False, "Yellow", False, True, False, False, False, False)
-yellow_reverse_two = card(False, "Yellow", False, True, False, False, False, False)
-yellow_draw_2_one = card(False, "Yellow", False, False, True, False, False, False)
-yellow_draw_2_two = card(False, "Yellow", False, False, True, False, False, False)
-  # Blues
-blue_zero = card(0, "Blue", False, False, False, False, False, False)
-blue_one_one = card(1, "Blue", False, False, False, False, False, False)
-blue_one_two = card(1, "Blue", False, False, False, False, False, False)
-blue_two_one = card(2, "Blue", False, False, False, False, False, False)
-blue_two_two = card(2, "Blue", False, False, False, False, False, False)
-blue_three_one = card(3, "Blue", False, False, False, False, False, False)
-blue_three_two = card(3, "Blue", False, False, False, False, False, False)
-blue_four_one = card(4, "Blue", False, False, False, False, False, False)
-blue_four_two = card(4, "Blue", False, False, False, False, False, False)
-blue_five_one = card(5, "Blue", False, False, False, False, False, False)
-blue_five_two = card(5, "Blue", False, False, False, False, False, False)
-blue_six_one = card(6, "Blue", False, False, False, False, False, False)
-blue_six_two = card(6, "Blue", False, False, False, False, False, False)
-blue_seven_one = card(7, "Blue", False, False, False, False, False, False)
-blue_seven_two = card(7, "Blue", False, False, False, False, False, False)
-blue_eight_one = card(8, "Blue", False, False, False, False, False, False)
-blue_eight_two = card(8, "Blue", False, False, False, False, False, False)
-blue_nine_one = card(9, "Blue", False, False, False, False, False, False)
-blue_nine_two = card(9, "Blue", False, False, False, False, False, False)
-blue_skip_one = card(False, "Blue", True, False, False, False, False, False)
-blue_skip_two = card(False, "Blue", True, False, False, False, False, False)
-blue_reverse_one = card(False, "Blue", False, True, False, False, False, False)
-blue_reverse_two = card(False, "Blue", False, True, False, False, False, False)
-blue_draw_2_one = card(False, "Blue", False, False, True, False, False, False)
-blue_draw_2_two = card(False, "Blue", False, False, True, False, False, False)
-  # Greens
-green_zero = card(0, "Green", False, False, False, False, False, False)
-green_one_one = card(1, "Green", False, False, False, False, False, False)
-green_one_two = card(1, "Green", False, False, False, False, False, False)
-green_two_one = card(2, "Green", False, False, False, False, False, False)
-green_two_two = card(2, "Green", False, False, False, False, False, False)
-green_three_one = card(3, "Green", False, False, False, False, False, False)
-green_three_two = card(3, "Green", False, False, False, False, False, False)
-green_four_one = card(4, "Green", False, False, False, False, False, False)
-green_four_two = card(4, "Green", False, False, False, False, False, False)
-green_five_one = card(5, "Green", False, False, False, False, False, False)
-green_five_two = card(5, "Green", False, False, False, False, False, False)
-green_six_one = card(6, "Green", False, False, False, False, False, False)
-green_six_two = card(6, "Green", False, False, False, False, False, False)
-green_seven_one = card(7, "Green", False, False, False, False, False, False)
-green_seven_two = card(7, "Green", False, False, False, False, False, False)
-green_eight_one = card(8, "Green", False, False, False, False, False, False)
-green_eight_two = card(8, "Green", False, False, False, False, False, False)
-green_nine_one = card(9, "Green", False, False, False, False, False, False)
-green_nine_two = card(9, "Green", False, False, False, False, False, False)
-green_skip_one = card(False, "Green", True, False, False, False, False, False)
-green_skip_two = card(False, "Green", True, False, False, False, False, False)
-green_reverse_one = card(False, "Green", False, True, False, False, False, False)
-green_reverse_two = card(False, "Green", False, True, False, False, False, False)
-green_draw_2_one = card(False, "Green", False, False, True, False, False, False)
-green_draw_2_two = card(False, "Green", False, False, True, False, False, False)
-  # Wild
-wild_draw_4 = card(False, "Draw 4", False, False, True, False, False, False)
-wild = card(False, "Wild Card", False, False, False, False, True, False)
-shuffle_hands_card = card(False, "Shuffle Hands", False, False, False, False,False, True)
 
 # Functions
-def print_logo():
-  print("U   U  NN  N  U   U  M    M")
-  print("U   U  N N N  U   U  MM  MM")
-  print("U   U  N  NN  U   U  M MM M")
-  print("UUUUU  N   N  UUUUU  M    M")
-
-# Function that defines card draw chance
-def draw_card_p1():
-  global p1_hand
-  color_draw = random.randint(1, 5)              
-  if color_draw == 1:
-    red_card_draw = random.randint(0, 12)    
-    if red_card_draw == 0:
-      p1_hand.append(red_zero)
-    
-    if red_card_draw == 1:
-      which_red_one = random.randint(1, 2)
-      if which_red_one == 1:
-        p1_hand.append(red_one_one)
-      elif which_red_one == 2:
-        p1_hand.append(red_one_two)
-        
-    elif red_card_draw == 2:
-      which_red_two = random.randint(1, 2)
-      if which_red_two == 1:
-        p1_hand.append(red_two_one)
-      elif which_red_two == 2:
-        p1_hand.append(red_two_two)
-
-    elif red_card_draw == 3:
-      which_red_three = random.randint(1, 2)
-      if which_red_three == 1:
-        p1_hand.append(red_three_one)
-      elif which_red_three == 2:
-        p1_hand.append(red_three_two)
-      
-    elif red_card_draw == 4:
-      which_red_four = random.randint(1, 2)
-      if which_red_four == 1:
-        p1_hand.append(red_four_one)
-      elif which_red_four == 2:
-        p1_hand.append(red_four_two)
-        
-    elif red_card_draw == 5:
-      which_red_five = random.randint(1, 2)
-      if which_red_five == 1:
-        p1_hand.append(red_five_one)
-      elif which_red_five == 2:
-        p1_hand.append(red_five_two)
-      
-    elif red_card_draw == 6:
-      which_red_six = random.randint(1, 2)
-      if which_red_six == 1:
-        p1_hand.append(red_six_one)
-      elif which_red_six == 2:
-        p1_hand.append(red_six_two)
-        
-    elif red_card_draw == 7:
-      which_red_seven = random.randint(1, 2)
-      if which_red_seven == 1:
-        p1_hand.append(red_seven_one)
-      elif which_red_seven == 2:
-        p1_hand.append(red_seven_two)
-        
-    elif red_card_draw == 8:
-      which_red_eight = random.randint(1, 2)
-      if which_red_eight == 1:
-        p1_hand.append(red_eight_one)
-      elif which_red_eight == 2:
-        p1_hand.append(red_eight_two)
-        
-    elif red_card_draw == 9:
-      which_red_nine = random.randint(1, 2)
-      if which_red_nine == 1:
-        p1_hand.append(red_nine_one)
-      elif which_red_nine == 2:
-        p1_hand.append(red_nine_two)
-    
-    elif red_card_draw == 10:
-      which_red_skip = random.randint(1, 2)
-      if which_red_skip == 1:
-        p1_hand.append(red_skip_one)
-      elif which_red_skip == 2:
-        p1_hand.append(red_skip_two)
-    elif red_card_draw == 11:
-      which_red_reverse = random.randint(1, 2)
-      if which_red_reverse == 1:
-        p1_hand.append(red_reverse_one)
-      elif which_red_reverse == 2:
-        p1_hand.append(red_reverse_two)
-        
-    elif red_card_draw == 12:
-      which_red_draw_2 = random.randint(1, 2)
-      if which_red_draw_2 == 1:
-        p1_hand.append(red_draw_2_one)
-      elif which_red_draw_2:
-        p1_hand.append(red_draw_2_two)
-      
-  elif color_draw == 2:        
-    yellow_card_draw = random.randint(0, 12)    
-    if yellow_card_draw == 0:
-      p1_hand.append(yellow_zero)
-
-    if yellow_card_draw == 1:
-      which_yellow_one = random.randint(1, 2)
-      if which_yellow_one == 1:
-        p1_hand.append(yellow_one_one)
-      elif which_yellow_one == 2:
-        p1_hand.append(yellow_one_two)
-
-    elif yellow_card_draw == 2:
-      which_yellow_two = random.randint(1, 2)
-      if which_yellow_two == 1:
-        p1_hand.append(yellow_two_one)
-      elif which_yellow_two == 2:
-        p1_hand.append(yellow_two_two)
-
-    elif yellow_card_draw == 3:
-      which_yellow_three = random.randint(1, 2)
-      if which_yellow_three == 1:
-        p1_hand.append(yellow_three_one)
-      elif which_yellow_three == 2:
-        p1_hand.append(yellow_three_two)
-
-    elif yellow_card_draw == 4:
-      which_yellow_four = random.randint(1, 2)
-      if which_yellow_four == 1:
-        p1_hand.append(yellow_four_one)
-      elif which_yellow_four == 2:
-        p1_hand.append(yellow_four_two)
-
-    elif yellow_card_draw == 5:
-      which_yellow_five = random.randint(1, 2)
-      if which_yellow_five == 1:
-        p1_hand.append(yellow_five_one)
-      elif which_yellow_five == 2:
-        p1_hand.append(yellow_five_two)
-
-    elif yellow_card_draw == 6:
-      which_yellow_six = random.randint(1, 2)
-      if which_yellow_six == 1:
-        p1_hand.append(yellow_six_one)
-      elif which_yellow_six == 2:
-        p1_hand.append(yellow_six_two)
-
-    elif yellow_card_draw == 7:
-      which_yellow_seven = random.randint(1, 2)
-      if which_yellow_seven == 1:
-        p1_hand.append(yellow_seven_one)
-      elif which_yellow_seven == 2:
-        p1_hand.append(yellow_seven_two)
-
-    elif yellow_card_draw == 8:
-      which_red_eight = random.randint(1, 2)
-      if which_red_eight == 1:
-        p1_hand.append(yellow_eight_one)
-      elif which_red_eight == 2:
-        p1_hand.append(yellow_eight_two)
-
-    elif yellow_card_draw == 9:
-      which_yellow_nine = random.randint(1, 2)
-      if which_yellow_nine == 1:
-        p1_hand.append(yellow_nine_one)
-      elif which_yellow_nine == 2:
-        p1_hand.append(yellow_nine_two)
-
-    elif yellow_card_draw == 10:
-      which_yellow_skip = random.randint(1, 2)
-      if which_yellow_skip == 1:
-        p1_hand.append(yellow_skip_one)
-      elif which_yellow_skip == 2:
-        p1_hand.append(yellow_skip_two)
-        
-    elif yellow_card_draw == 11:
-      which_yellow_reverse = random.randint(1, 2)
-      if which_yellow_reverse == 1:
-        p1_hand.append(yellow_reverse_one)
-      elif which_yellow_reverse == 2:
-        p1_hand.append(yellow_reverse_two)
-
-    elif yellow_card_draw == 12:
-      which_yellow_draw_2 = random.randint(1, 2)
-      if which_yellow_draw_2 == 1:
-        p1_hand.append(yellow_draw_2_one)
-      elif which_yellow_draw_2:
-        p1_hand.append(yellow_draw_2_two)
-        
-  elif color_draw == 3:                        #   
-    blue_card_draw = random.randint(0, 12)   
-    if blue_card_draw == 0:
-      p1_hand.append(blue_zero)
-
-    if blue_card_draw == 1:
-      which_blue_one = random.randint(1, 2)
-      if which_blue_one == 1:
-        p1_hand.append(blue_one_one)
-      elif which_blue_one == 2:
-        p1_hand.append(blue_one_two)
-
-    elif blue_card_draw == 2:
-      which_blue_two = random.randint(1, 2)
-      if which_blue_two == 1:
-        p1_hand.append(blue_two_one)
-      elif which_blue_two == 2:
-        p1_hand.append(blue_two_two)
-
-    elif blue_card_draw == 3:
-      which_blue_three = random.randint(1, 2)
-      if which_blue_three == 1:
-        p1_hand.append(blue_three_one)
-      elif which_blue_three == 2:
-        p1_hand.append(blue_three_two)
-
-    elif blue_card_draw == 4:
-      which_blue_four = random.randint(1, 2)
-      if which_blue_four == 1:
-        p1_hand.append(blue_four_one)
-      elif which_blue_four == 2:
-        p1_hand.append(blue_four_two)
-
-    elif blue_card_draw == 5:
-      which_blue_five = random.randint(1, 2)
-      if which_blue_five == 1:
-        p1_hand.append(blue_five_one)
-      elif which_blue_five == 2:
-        p1_hand.append(blue_five_two)
-
-    elif blu_card_draw == 6:
-      which_red_six = random.randint(1, 2)
-      if which_red_six == 1:
-        p1_hand.append(red_six_one)
-      elif which_red_six == 2:
-        p1_hand.append(red_six_two)
-
-    elif red_card_draw == 7:
-      which_red_seven = random.randint(1, 2)
-      if which_red_seven == 1:
-        p1_hand.append(red_seven_one)
-      elif which_red_seven == 2:
-        p1_hand.append(red_seven_two)
-
-    elif red_card_draw == 8:
-      which_red_eight = random.randint(1, 2)
-      if which_red_eight == 1:
-        p1_hand.append(red_eight_one)
-      elif which_red_eight == 2:
-        p1_hand.append(red_eight_two)
-
-    elif red_card_draw == 9:
-      which_red_nine = random.randint(1, 2)
-      if which_red_nine == 1:
-        p1_hand.append(red_nine_one)
-      elif which_red_nine == 2:
-        p1_hand.append(red_nine_two)
-
-    elif red_card_draw == 10:
-      which_red_skip = random.randint(1, 2)
-      if which_red_skip == 1:
-        p1_hand.append(red_skip_one)
-      elif which_red_skip == 2:
-        p1_hand.append(red_skip_two)
-    elif red_card_draw == 11:
-      which_red_reverse = random.randint(1, 2)
-      if which_red_reverse == 1:
-        p1_hand.append(red_reverse_one)
-      elif which_red_reverse == 2:
-        p1_hand.append(red_reverse_two)
-
-    elif red_card_draw == 12:
-      which_red_draw_2 = random.randint(1, 2)
-      if which_red_draw_2 == 1:
-        p1_hand.append(red_draw_2_one)
-      elif which_red_draw_2:
-        p1_hand.append(red_draw_2_two)
-  elif color_draw == 4:                        #
-    green_card_draw = random.randint(0, 12)
-  elif color_draw == 5:                        #
-    wild_card_draw = random.randint(1, 3)
-    if wild_card_draw == 1:
-      p1_hand.append(wild_draw_4)              #
-
-
-def drop_card():
-  pass  # add code here that will drop a card from your hand, check if move is legal
-
-
 def shuffle_hands():
-  pass  # add code that will do the "shuffle hands" thing
+  global p1_hand, p2_hand
+  temp_hand = []
+  temp_hand.extend(p1_hand)
+  temp_hand.extend(p2_hand)
+  random.shuffle(temp_hand)
+  th_length = len(temp_hand)
+  th_middle = th_length // 2
+  p1_hand = temp_hand[:th_middle]
+  p2_hand = temp_hand[th_middle:]
 
-
-def new_game():
-  global p1_name
-  global p2_name
-  global p1_hand
-  global p2_hand
-  p1_name = input("What is player 1's name?")
-  p2_name = input("What is player 2's name?")
-  p1_hand = []
-  p2_hand = []
 
 def remake_deck():
-  pass  # add code that will remake the deck if the deck is empty
+  global deck, discard
+  deck.extend(discard)
+  random.shuffle(deck)
 
+
+def make_deck():
+  global deck
+  deck = []
+  for n in range(1, 15):
+    for c in "rby":
+      deck.append(str(n) + " " + c)
+  deck.append("S r")
+  deck.append("S b")
+  deck.append("S y")
+  random.shuffle(deck)
+
+
+def start_game():
+  global p1_hand, p2_hand, p1_name, p2_name, deck, discard, discard_color
+  discard = []
+  dc_options = ["r", "b", "y"]
+  discard_color = dc_options[random.randint(0, 2)]
+  make_deck()
+  repeat = 7
+  while repeat > 1:
+    draw_card_p1()
+    draw_card_p2()
+    repeat = repeat - 1
+  p1_name = input("What is Player 1's name? \n  -> ")
+  p2_name = input("What is Player 2's name? \n  -> ")
+  turns()
+
+
+def turns():
+  global p1_hand, p2_hand, p1_name, p2_name
+
+  def p1_turn():
+    print(" ***P1 Turn*** ")
+    print("What would you like to do? (See Hand, Draw, or Drop")
+    print("(Make sure you type the option EXACTLY as it is shown here.)")
+    p1_turn_in = input("  -> ")
+    if p1_turn_in == "See Hand":
+      print(p1_hand)
+      p1_turn()
+    elif p1_turn_in == "Draw":
+      draw_card_p1()
+      print("You drew [" + p1_hand[-1] + "]")
+      p1_turn()
+    elif p1_turn_in == "Drop":
+      drop_card_p1()
+      p2_turn()
+    else:
+      print("Invalid.")
+      p1_turn()
+
+  def p2_turn():
+    print(" ***P2 Turn*** ")
+    print("What would you like to do? (See Hand, Draw, or Drop)")
+    print("(Make sure you type the option EXACTLY as it is shown here.)")
+    p2_turn_in = input("  -> ")
+    if p2_turn_in == "See Hand":
+      print(p2_hand)
+      p2_turn()
+    elif p2_turn_in == "Draw":
+      draw_card_p2()
+      p2_turn()
+    elif p2_turn_in == "Drop":
+      drop_card_p2()
+      p1_turn()
+    else:
+      print("Invalid.")
+
+  p1_turn()
+
+
+def print_logo():
+  print("U   U  NN  N  U   U  M    M   |‾‾‾‾‾|")
+  print("U   U  N N N  U   U  MM  MM   | 14r |")
+  print("U   U  N  NN  U   U  M MM M   |     |")
+  print("UUUUU  N   N  UUUUU  M    M   |_____|")
+
+
+def draw_card_p1():
+  global deck, p1_hand
+  p1_hand.append(deck[0])
+  deck.remove(deck[0])
+
+
+def draw_card_p2():
+  global deck, p2_hand
+  p2_hand.append(deck[0])
+  deck.remove(deck[0])
+
+
+def drop_card_p1():
+  global discard_color, discard, p1_hand, prev_card
+  pc_info = prev_card.split(" ", 1)
+  card_to_drop = ""
+  print("The last card that was dropped was: " + str(prev_card))
+  print("The current discard color is [" + discard_color + "]")
+  print("Drop what card?" + "(", p1_hand, ")")
+  print("(Make sure you type the card EXACTLY as it is shown here.)")
+  card_to_drop = input("  -> ")
+  ctd_info = card_to_drop.split(" ", 1)
+  if str(card_to_drop) not in p1_hand and not "Draw":
+    print("Invalid. Select a card from your hand!")
+  elif str(ctd_info[-1]) is not str(discard_color) and str(ctd_info[0]) is not str(pc_info[0]):
+    print("This card doesn't match the discard color. Draw a card?")
+    print("(Any answer besides \"y\" will be considered \"n\")")
+    dc_draw_input = input("  -> ")
+    if dc_draw_input == "y":
+      draw_card_p1()
+      drop_card_p1()
+    else:
+      drop_card_p1()
+  else:
+    if card_to_drop in ["S r", "S b", "S y"]:
+      discard.append(str(card_to_drop))
+      p1_hand.remove(str(card_to_drop))
+      shuffle_hands()
+      shuffle_hands()
+      prev_card = card_to_drop
+    elif ctd_info[0] == pc_info[0]:
+      discard_color = ctd_info[1]
+      discard.append(str(card_to_drop))
+      p1_hand.remove(str(card_to_drop))
+      prev_card = card_to_drop
+    else:
+      discard.append(str(card_to_drop))
+      p1_hand.remove(str(card_to_drop))
+      prev_card = card_to_drop
+
+def drop_card_p2():
+  global discard_color, discard, p2_hand, prev_card
+  pc_info = prev_card.split(" ", 1)
+  card_to_drop = ""
+  print("The last card that was dropped was: " + str(prev_card))
+  print("The current discard color is [" + discard_color + "]")
+  print("Drop what card?" + "(", p2_hand, ")")
+  print("(Make sure you type the card EXACTLY as it is shown here.)")
+  print("If you have no card that matches the discard color, answer with \"Draw\"")
+  card_to_drop = input("  -> ")
+  ctd_info = card_to_drop.split(" ", 1)
+  if str(card_to_drop) not in p2_hand and not "Draw":
+    print("Invalid. Select a card from your hand!")
+  elif str(ctd_info[-1]) is not str(discard_color) and str(ctd_info[0]) is not str(pc_info[0]):
+    print("This card doesn't match the discard color. Draw a card?")
+    print("(Any answer besides \"y\" will be considered \"n\")")
+    dc_draw_input = input("  -> ")
+    if dc_draw_input == "y":
+      draw_card_p2()
+      drop_card_p2()
+    else:
+      drop_card_p2()
+  else:
+    if card_to_drop in ["S r", "S b", "S y"]:
+      discard.append(str(card_to_drop))
+      p2_hand.remove(str(card_to_drop))
+      prev_card = card_to_drop
+      shuffle_hands()
+    elif ctd_info[0] == pc_info[0]:
+      discard_color = ctd_info[1]
+      discard.append(str(card_to_drop))
+      p2_hand.remove(str(card_to_drop))
+      prev_card = card_to_drop
+    else:
+      discard.append(str(card_to_drop))
+      p2_hand.remove(str(card_to_drop))
+      prev_card = card_to_drop
 
 # Main Code
-
-
-
-# Main Code
+start_game()

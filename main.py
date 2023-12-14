@@ -1,6 +1,6 @@
 """
-Unum: a cli clone of Uno
-{license info}
+Unum: a simple Uno-like game for any computer with Python installed
+{license info not available}
 """
 
 # Generic Imports

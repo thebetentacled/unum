@@ -1,6 +1,6 @@
 """
 Unum: a simple Uno-like game for any computer with Python installed
-{license info not available}
+GNU GPLv3 License
 """
 
 # Generic Imports

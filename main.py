@@ -20,6 +20,15 @@ p2_hand = []
 
 
 # Functions
+def win_check():
+  global p1_hand, p2_hand, p1_name, p2_name
+  if len(p1_hand) is 1:
+    print(p1_name + " has won!")
+  elif len(p2_hand) is 1:
+    print(p2_name + " has won!")
+  else:
+    pass
+  
 def shuffle_hands():
   global p1_hand, p2_hand
   temp_hand = []
@@ -110,7 +119,7 @@ def turns():
 
 def print_logo():
   print("U   U  NN  N  U   U  M    M   |‾‾‾‾‾|")
-  print("U   U  N N N  U   U  MM  MM   | 14r |")
+  print("U   U  N N N  U   U  MM  MM   |  X  |")
   print("U   U  N  NN  U   U  M MM M   |     |")
   print("UUUUU  N   N  UUUUU  M    M   |_____|")
 
